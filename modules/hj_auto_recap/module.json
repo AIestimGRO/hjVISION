@@ -1,0 +1,26 @@
+{
+  "id": "hj.auto_recap",
+  "name": "HJ Auto Recap",
+  "version": "0.0.0",
+  "host_api": "1.x",
+  "entrypoint": "backend.plugin:create_plugin",
+  "provides": [
+    "recap.api"
+  ],
+  "requires": [
+    "core.events"
+  ],
+  "optional": [],
+  "permissions": [
+    "events.read",
+    "events.write",
+    "storage.module",
+    "services.provide"
+  ],
+  "enabled": false,
+  "ui": {
+    "title": "HJ Auto Recap",
+    "path": ""
+  },
+  "data_schema": 0
+}

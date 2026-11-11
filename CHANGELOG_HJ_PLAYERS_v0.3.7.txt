@@ -1,0 +1,19 @@
+HI, JACK LIVE — HJ PLAYERS v0.3.7 TEST BUILD
+
+Target: app v0.3.5+ with portable HJ PLAYERS module.
+- Preview canvas remains 16:9, 1920x1080 normalized coordinates.
+- Editor camera preview becomes full-width by default, optional narrow toggle.
+- Uploaded OBS reference screenshot uses FIT (no crop), letterbox for non-16:9 input; warns on incompatible source dimensions.
+- Same on-air overlay API and SQLite layout.
+- Preserves v0.3.6 auto placement, rotation and publish buttons.
+- Backup/rollback through module update manager works.
+- Not a tested Windows stable release; only publish GitHub after operator approval.
+
+OBS SETUP
+- OBS Base Canvas 1920x1080; both Browser Sources 1920x1080, and Reset Transform / Fit to Screen.
+- Use a full 16:9 screenshot of the OBS scene for reference, not a cropped camera picture.
+- UI can be enlarged by expanding the Edge window.
+
+INSTALL
+- Close OBS/overlay connections, use /modules -> Validate ZIP -> Install ZIP.
+- Restart HI, JACK LIVE. Keep rollback available.

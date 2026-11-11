@@ -1,5 +1,30 @@
-# HI, JACK LIVE
+# HI, JACK LIVE — локальное Windows-приложение для OBS
 
-Initial repository bootstrap for operator-accepted checkpoint (2026-11-11).
+**Контрольная точка 11.11.2026** — пользователь разрешил сохранить текущую «плюс-минус рабочую» версию для восстановления и развития. Это **не** HI, JACK LIVE 1.0.
 
-Full module source tree and starter documentation are published in the next commit. This is a working checkpoint, **not** the final 1.0 release.
+- Launcher: `v0.3.5` (Edge).
+- `hj_players`: `v0.3.10`.
+- `hj_timer_overlay`: `v0.2.0`.
+- Остальные модули см. `modules/*/module.json`, часть из них — выключенные заготовки.
+
+## Windows и OBS
+
+OBS Studio отвечает за видео, звук, запись, стрим; приложение запускает локальный сервер по адресу `http://127.0.0.1:8765/`. Оверлеи в OBS — источники типа Browser с размером 1920×1080.
+
+Для локального создания EXE пока служит `BUILD_EXE_WINDOWS11.cmd`; финальная цель — готовый архив из GitHub Actions. Не следует изменять файлы вручную в установленной программе. Модули обновляются через менеджер ZIP с проверкой и откатом.
+
+## Тесты
+
+`python -m pip install -r requirements-dev.txt` и `python -m pytest -q`. Перед публикацией проверены 68 тестов на Linux; Windows-сборку и реальный OBS необходимо проверять отдельно.
+
+## Архитектура
+
+- `core/`, `app/`, `shared_contracts/` — HOST API и управление модулями.
+- `modules/hj_players/` — игроки и эфирные плашки.
+- `modules/hj_timer_overlay/` — локальный оверлей турнирного таймера.
+- `modules/hj_effects/` — эффекты.
+- другие `modules/*` — отдельные модули, некоторые пока заглушки.
+- `docs/STARTER_CHATS/` — задания для независимых чатов каждого модуля.
+- `docs/PROJECT_STATUS_2026-11-11.md` — подтверждённые версии, дефекты, дальнейшие шаги.
+
+**Безопасность:** не коммитить `.env`, токены/ключи, локальные игровые базы, пользовательские настройки, логи и сборки `dist/`.

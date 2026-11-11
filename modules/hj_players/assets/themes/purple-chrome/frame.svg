@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 360" width="1600" height="360">
+<defs>
+ <linearGradient id="outer" x1="0" x2=".13" y1="0" y2="1"><stop stop-color="#faf0ff"/><stop offset=".14" stop-color="#8f9ab2"/><stop offset=".27" stop-color="#241431"/><stop offset=".38" stop-color="#ac6eff"/><stop offset=".53" stop-color="#8f9ab2"/><stop offset=".72" stop-color="#241431"/><stop offset=".86" stop-color="#8f9ab2"/><stop offset="1" stop-color="#faf0ff"/></linearGradient>
+ <linearGradient id="rim" x1="0" x2="0" y1="0" y2="1"><stop stop-color="#d7c2ff"/><stop offset=".12" stop-color="#8f9ab2"/><stop offset=".22" stop-color="#241431"/><stop offset=".29" stop-color="#ac6eff"/><stop offset=".46" stop-color="#241431"/><stop offset=".78" stop-color="#8f9ab2"/><stop offset=".86" stop-color="#ac6eff"/><stop offset="1" stop-color="#d7c2ff"/></linearGradient>
+ <linearGradient id="enamel" x1="0" x2="0" y1="0" y2="1"><stop stop-color="#060607"/><stop offset=".32" stop-color="#262021"/><stop offset=".56" stop-color="#0c0b0d"/><stop offset=".82" stop-color="#130d0f"/><stop offset="1" stop-color="#050508"/></linearGradient>
+ <linearGradient id="ref" x1="0" x2="0" y1="0" y2="1"><stop stop-color="#ffffff" stop-opacity=".32"/><stop offset=".9" stop-color="#fff" stop-opacity="0"/></linearGradient>
+ <linearGradient id="lip" x1="0" x2="0" y1="0" y2="1"><stop stop-color="#d7c2ff"/><stop offset=".5" stop-color="#241431"/><stop offset="1" stop-color="#8f9ab2"/></linearGradient>
+</defs>
+<!-- A wide faceted outer bezel, with top and bottom steps. Transparent exterior. -->
+<path d="M145 35 H465 L515 7 H1080 L1130 35 H1455 Q1508 37 1533 79 L1581 148 Q1603 178 1582 211 L1530 283 Q1505 325 1450 326 H1138 L1090 354 H512 L463 326 H148 Q97 324 67 281 L20 210 Q-3 181 19 148 L69 76 Q98 35 145 35 Z" fill="url(#outer)" stroke="#faf0ff" stroke-width="5"/>
+<path d="M152 51 H478 L528 26 H1065 L1118 51 H1449 Q1491 52 1517 87 L1561 151 Q1578 180 1560 207 L1515 274 Q1491 309 1448 309 H1129 L1082 335 H519 L471 309 H151 Q111 308 83 271 L42 208 Q23 179 42 151 L86 88 Q110 51 152 51Z" fill="url(#rim)" stroke="#241431" stroke-width="5"/>
+<path d="M154 68 H484 L536 46 H1059 L1112 68 H1446 Q1473 70 1494 96 L1539 158 Q1554 181 1539 202 L1493 264 Q1474 289 1446 292 H1120 L1072 316 H533 L483 292 H155 Q125 291 105 264 L61 203 Q46 179 61 157 L106 96 Q124 68 154 68Z" fill="url(#enamel)" stroke="#ac6eff" stroke-width="4"/>
+<path d="M155 82 H481 L540 59 H1054 L1115 82 H1448 Q1468 84 1484 104 L1524 162 Q1536 180 1525 199 L1483 255 Q1466 275 1444 276 H1115 L1064 301 H538 L486 276 H154 Q136 276 120 254 L79 198 Q66 180 80 162 L122 102 Q135 82 155 82Z" fill="none" stroke="#b7a4ff" stroke-width="3" opacity=".7"/>
+<path d="M148 95 H1435 Q1451 95 1460 115 L1491 160 Q1497 170 1483 171 H115 Q106 167 115 157 L132 110 Q137 98 148 95Z" fill="url(#ref)" opacity=".5"/>
+<!-- Distinctive top and bottom metal facets; nineslice protects them against horizontal stretch -->
+<path d="M510 42 L537 8 H1075 L1101 42 L1065 72 H547Z" fill="url(#lip)" stroke="#faf0ff" stroke-width="3" />
+<path d="M510 318 L539 287 H1064 L1095 318 L1070 350 H540Z" fill="url(#lip)" stroke="#faf0ff" stroke-width="3"/>
+<path d="M90 167 L56 182 L89 199 M1511 167 L1548 182 L1512 199" fill="none" stroke="#d7c2ff" stroke-width="5" stroke-linecap="round"/>
+</svg>

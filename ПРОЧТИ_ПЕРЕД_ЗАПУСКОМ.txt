@@ -1,0 +1,15 @@
+HI, JACK LIVE v0.3.4 — ПОПЫТКА УСТРАНЕНИЯ ЗАВИСАНИЯ WINDOWS 11
+
+1. Сохрани предыдущую версию приложения как резервную копию.
+2. Распакуй ВЕСЬ архив в новую папку. Не смешивай с предыдущими версиями.
+3. Запусти BUILD_EXE_WINDOWS11.cmd и дождись BUILD SUCCESS.
+4. Запусти dist\HI_JACK_LIVE\HiJackLive.exe.
+5. Окно откроется в отдельном режиме Microsoft Edge --app без вкладок браузера.
+   Это обход проблем pywebview/WebView2, а не подтвержденное исправление WebView2.
+6. Для сравнения старого встроенного окна запусти START_WEBVIEW2_TEST.cmd.
+7. Для диагностики через обычный браузер запусти START_BROWSER_DIAGNOSTIC.cmd.
+8. Логи: OPEN_DIAGNOSTICS.cmd, файл launcher.log.
+9. Данные, настройки и профили в %LOCALAPPDATA%\HiJackLive НЕ УДАЛЯТЬ.
+
+ВАЖНО: ZIP содержит исходники и сборщик. Windows EXE нужно собрать на Windows.
+Стабильность окна Microsoft Edge на твоем ПК пока не подтверждена.

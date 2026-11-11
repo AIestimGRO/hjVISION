@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>HI, JACK — LIVE CONTROL</title><link rel="stylesheet" href="/static/style.css?v=040"><link rel="stylesheet" href="/static/graphics.css?v=040"><link rel="stylesheet" href="/module-assets/hj.timer_overlay/integrated.css"><link rel="stylesheet" href="/module-assets/hj.timer_overlay/widget-v2.css"></head>
+<body class="admin-page">
+<header class="topbar"><div class="brand"><div class="brand-symbol">J<span>♠</span></div><div><strong>HI, JACK <em>LIVE</em></strong><small>OVERLAYS CONTROL / LOCAL STUDIO</small></div></div>
+<div class="topbar-right"><span id="connection" class="connection offline"><i></i> ПОДКЛЮЧЕНИЕ...</span><span class="minor">OBS / 1920 × 1080</span><a class="button soft" href="/modules" style="text-decoration:none">⚙ Модули / обновления</a><button class="button soft" id="openPlayers">Оверлей ↗</button><button type="button" class="button soft" id="quitDesktop" style="display:none" title="Остановить HI, JACK LIVE и локальный сервер OBS">⏻ Завершить программу</button></div></header>
+<div class="shell">
+ <div class="workspace-head"><div><span class="eyebrow">STREAM PRODUCTION DESK</span><h1>Управление эфиром</h1><p>Никнеймы, рассадка и события — в одной панели.</p></div>
+ <div class="workspace-actions"><div class="mode" role="group" aria-label="Режим"><button id="liveMode" class="active">● ЭФИР</button><button id="editMode">✦ РЕДАКТОР</button></div><button id="publishTop" class="button primary" hidden>✓ Опубликовать в OBS</button><button id="undo" class="button soft">↶ Отменить</button><button id="export" class="button soft">Экспорт</button><button id="import" class="button soft">Импорт</button><input id="importFile" type="file" accept="application/json,.json" hidden></div></div>
+ <div class="dashboard" id="dashboard">
+  <section class="stage-column">
+   <div class="panel stage-panel"><div class="panel-head"><div><span class="eyebrow">01 / LIVE COMPOSITION</span><h2>Кадр трансляции <span class="frame-ratio">16:9 · 1920×1080 (холст OBS)</span></h2></div><div class="profile-controls"><button type="button" class="button soft frame-focus-button" id="widePreview" title="Расширить редактор на всю ширину окна">⛶ Широкий кадр</button><label for="profile">РАКУРС</label><select id="profile"></select><button class="tiny-button" id="addProfile" title="Новая раскладка">＋</button></div></div>
+    <div class="stage-wrap"><div id="stage" class="stage"><div class="table-art"><div class="table-felt"><span class="table-wordmark">HI, JACK <b>CLUB</b></span><span class="table-sub">POKER IS AN ART</span><span class="table-centerline"></span></div></div><div id="stageBackground" class="stage-background"></div><div class="stage-grid" id="stageGrid"></div><div id="stageLabels" class="stage-labels"></div>
+     <div class="timer-widget hjt-stage-widget hidden" id="hjTimerWidget" aria-label="Блайнды и время; перетащите в режиме редактора" title="В редакторе перетащите таймер в нужную часть кадра">
+       <div class="timer-head"><span class="timer-level">УРОВЕНЬ —</span><span class="clock-status"><i class="live-dot"></i>СВЯЗЬ...</span></div>
+       <div class="timer-body"><span class="blinds">— / —</span><span class="countdown">--:--</span></div>
+       <div class="ante">АНТЕ —</div>
+     </div><div class="stage-label top-left">CAM 01 · <span id="profileTag">TOP VIEW</span></div><div class="stage-label bottom-left">PREVIEW <span>●</span> 16:9 · 1920×1080</div></div></div>
+    <div class="frame-guide" id="frameGuide">Для точного совмещения с камерой загрузите полный кадр сцены OBS 16:9 (не обрезанный фрагмент). Фон используется только для расстановки плашек.</div>
+    <div class="stage-footer"><span id="stageHint">Изменения никнеймов сразу попадают в эфир</span><div class="stage-footer-actions"><button id="screenshot" class="text-button">↑ Загрузить кадр OBS</button><input id="screenshotFile" type="file" accept="image/*" hidden><button id="removeScreenshot" class="text-button muted">Убрать фон</button><button id="toggleGrid" class="text-button editor-only">▦ Сетка</button></div></div>
+   </div>
+   <div id="editorBar" class="editor-bar" hidden><div><strong>РАСКЛАДКА ЕЩЁ НЕ В ЭФИРЕ</strong><span id="draftLabel">Перемещения сохраняются в черновике. Нажмите «Опубликовать в OBS».</span></div><div><button class="button soft" id="autoPlace">◎ Расставить по боксам</button><button class="button soft" id="discard">Отменить черновик</button><button class="button primary" id="publish">✓ Опубликовать в OBS</button></div></div>
+   <div id="properties" class="panel properties" hidden>
+    <div class="panel-head badge-settings-head">
+     <div><span class="eyebrow">ПЛАШКА / НАСТРОЙКА</span><h2>Игрок: <span id="selectedName">—</span></h2></div>
+     <div class="badge-mode-switch" role="group" aria-label="Режим настройки плашки">
+      <button type="button" id="badgeModeBasic" class="button soft active" aria-pressed="true">Обычная</button>
+      <button type="button" id="badgeModeAdvanced" class="button soft" aria-pressed="false">Расширенная</button>
+     </div>
+    </div>
+    <div class="quick-rotate"><strong>Расположение плашки</strong><button type="button" id="rotateLeft" class="button soft">↶ Вертикально −90°</button><button type="button" id="rotateStraight" class="button soft">▬ Горизонтально</button><button type="button" id="rotateRight" class="button soft">↷ Вертикально +90°</button></div>
+    <p class="badge-quick-help">Перемещай плашку мышью. Чтобы изменить размер, потяни за угол выделенной плашки — текст увеличится или уменьшится вместе с ней. Для эфира нажми «Опубликовать в OBS».</p>
+    <div id="badgeAdvancedOptions" class="badge-advanced-options" hidden>
+     <div class="badge-advanced-heading"><span>Точные настройки положения и оформления</span><button type="button" class="button soft" id="resetBadgeSize">↻ Восстановить стандарт</button></div>
+     <div class="badge-preset-actions"><button type="button" class="button primary" id="saveBadgeDefault">★ Сохранить как стандарт</button><button type="button" class="button soft" id="applyBadgeDefault">Применить ко всем в этом ракурсе</button></div>
+     <p class="badge-advanced-note">Стандарт сохранится для новых игроков во всех ракурсах. Применение к уже созданным изменяет только размер и оформление, но не координаты. В OBS изменения появятся после публикации.</p>
+     <p class="badge-advanced-note">Размер текста тоже масштабируется вместе с плашкой. Ползунок задаёт базовую величину шрифта.</p>
+    <div class="prop-grid">
+     <label>Ширина <input id="propSize" type="range" min="4" max="75" step="1"><span id="propSizeValue"></span></label>
+     <label>Высота <input id="propHeight" type="range" min="2" max="25" step=".5"><span id="propHeightValue"></span></label>
+     <label>Масштаб <input id="propScale" type="range" min="25" max="200" step="5"><span id="propScaleValue"></span><input id="propScaleNumber" type="number" min="25" max="300" step="5" aria-label="Масштаб в процентах"></label>
+     <label>Размер текста <input id="propFont" type="range" min="8" max="88" step="1"><span id="propFontValue"></span></label>
+     <label>Внутренние отступы <input id="propPadding" type="range" min="0" max="40" step="1"><span id="propPaddingValue"></span></label>
+     <label>Свечение <input id="propGlow" type="range" min="0" max="100" step="5"><span id="propGlowValue"></span></label>
+     <label>Поворот <input id="propRotation" type="range" min="-180" max="180" step="1"><span id="propRotationValue"></span></label>
+     <label>Прозрачность <input id="propOpacity" type="range" min="10" max="100" step="5"><span id="propOpacityValue"></span></label>
+     <label>Шаблон для этого ракурса<select id="propStyle" class="theme-select"><option value="">Как у игрока</option><option value="compact">COMPACT</option><option value="classic">CLASSIC</option><option value="premium">PREMIUM</option></select></label>
+     <label class="prop-check"><input id="propVisible" type="checkbox"> Показывать в этой раскладке</label>
+    </div>
+    </div>
+   </div>
+   <div class="panel theme-panel"><div class="panel-head"><div><span class="eyebrow">THEME ENGINE / LOCAL PACKS</span><h2>Графические темы</h2></div><button id="applyTheme" class="button primary">Применить оформление в эфир</button></div><div class="theme-toolbar"><label>ОБЩИЙ ШАБЛОН<select class="theme-select" id="globalStyle"><option value="compact">COMPACT</option><option value="classic">CLASSIC</option><option value="premium">PREMIUM</option></select></label><span class="small-note">Выбор темы показывает предпросмотр. В OBS она попадёт только после применения.</span><div id="themeCards" class="theme-cards"></div></div></div>
+   <div class="panel effects-panel"><div class="panel-head"><div><span class="eyebrow">03 / ON-AIR MOMENTS</span><h2>Эфирные эффекты</h2></div><span class="section-sub">Нажмите для запуска</span></div><div class="effect-buttons" id="effects"></div><div class="effects-footer"><div class="effect-target"><label for="effectTarget">ДЛЯ ИГРОКА</label><select id="effectTarget"><option value="">Без привязки</option></select></div><div class="volume"><label for="volume">ЗВУК <span id="volumeValue">28%</span></label><input id="volume" type="range" min="0" max="100" value="28"></div><button class="button danger" id="stopEffects">■ Стоп все эффекты</button></div></div>
+  </section>
+  <aside class="right-column"><div class="panel players-panel"><div class="panel-head"><div><span class="eyebrow">02 / SEATING & PLAYERS</span><h2>Участники <span id="count">0 / 10</span></h2></div><button id="addPlayer" class="button primary add-button">＋ Игрок</button></div>
+   <p class="panel-note">Любой игрок может занимать любой свободный бокс. Плашку можно скрыть без удаления участника.</p><div class="players-list" id="playerList"></div><div class="dealer-sep">ДИЛЕР / ОТДЕЛЬНЫЙ ОБЪЕКТ</div><div id="dealerRow"></div>
+   <div class="players-footer"><button class="text-button" id="resetStatuses">↻ Сбросить статусы</button><button class="text-button muted" id="demo">Демо ×10</button><button class="text-button dangerous" id="clearPlayers">Очистить стол</button></div></div>
+   <div class="panel hjt-panel" id="hjTimerPanel">
+     <div class="panel-head"><div><span class="eyebrow">TIMER / LIVE DATA</span><h2>Блайнды и время</h2></div><span class="hjt-connection" id="hjtConnection">Подключение...</span></div>
+     <div class="hjt-panel-body">
+       <p class="hjt-note">Данные автоматически поступают с timer.hijackpoker.ru. Положение и оформление меняются здесь, отдельно от игроков. Ракурс выбирается сверху над кадром.</p>
+       <label class="hjt-check"><input type="checkbox" id="hjtVisible"> Показывать в OBS</label>
+       <label>Оформление<select id="hjtVariant"><option value="horizontal">Компактное — в одну строку</option><option value="minimal">Минималистичное</option><option value="stacked">Узкое — в две строки</option><option value="premium">BRONZE PREMIUM</option></select></label>
+       <label>Размер блока <output id="hjtWidthLabel">29%</output><input id="hjtWidth" type="range" min="18" max="55" step="1"></label>
+       <label>Непрозрачность <output id="hjtOpacityLabel">96%</output><input id="hjtOpacity" type="range" min="35" max="100" step="5"></label>
+       <div class="hjt-inline-checks"><label class="hjt-check"><input type="checkbox" id="hjtLevel"> Уровень</label><label class="hjt-check"><input type="checkbox" id="hjtAnte"> Анте</label></div>
+       <div class="hjt-actions"><button class="button primary" id="hjtPublish">✓ Опубликовать таймер</button><button class="button soft" id="hjtDiscard">Сбросить черновик</button></div>
+       <p class="hjt-feedback" id="hjtFeedback" role="status">Загрузка настроек...</p>
+       <p class="hjt-note">Чтобы переместить блок, нажми «✦ РЕДАКТОР» и перетащи таймер по кадру 16:9. В OBS источник должен иметь размер 1920×1080 и не быть растянутым.</p>
+       <div class="hjt-url"><span>OBS · прозрачный источник</span><code id="hjtUrl"></code><button type="button" class="button soft" id="hjtCopy">Копировать URL</button></div>
+     </div>
+   </div>
+   <div class="panel info-panel"><div class="panel-head"><div><span class="eyebrow">SYSTEM / LOCAL</span><h2>Подключение к OBS</h2></div><span class="round-icon">⌘</span></div><p>Добавьте два источника типа «Браузер» поверх камеры в OBS. Размер обоих — <b>1920 × 1080</b>.</p><div class="link-row"><span>ИГРОКИ</span><code id="playersUrl">127.0.0.1:8765/overlay/players?layout=top</code><button id="copyPlayers" title="Копировать">⧉</button></div><div class="link-row"><span>ЭФФЕКТЫ</span><code id="effectsUrl">127.0.0.1:8765/overlay/effects</code><button id="copyEffects" title="Копировать">⧉</button></div><p class="small-note">Прозрачный фон · локальная работа без интернета · WebSocket <button id="backup" class="text-button">Создать резервную копию</button></p></div>
+  </aside>
+ </div>
+ <footer class="footer"><span>HI, JACK CLUB © 2026</span><span>LIVE OVERLAYS · HJ PLAYERS 0.3.10</span><span id="saveState">SQLite · автосохранение</span></footer>
+</div>
+<div id="modal" class="modal-wrap" hidden><div class="modal-backdrop" id="modalBackdrop"></div><form id="playerForm" class="modal" autocomplete="off"><div class="modal-top"><div><span class="eyebrow">PLAYER MANAGEMENT</span><h2 id="modalHeading">Новый игрок</h2></div><button type="button" class="close-button" id="closeModal">✕</button></div><label>НИКНЕЙМ<input required maxlength="36" id="formName" placeholder="Например, JACK99"></label><label>ФИЗИЧЕСКИЙ БОКС<select id="formSeat"></select></label><label>ТЕМА ИГРОКА<select id="formTheme"></select></label><label>СТИЛЬ ПЛАШКИ<select id="formStyle"><option value="">Использовать общий стиль</option><option value="classic">CLASSIC</option><option value="compact">COMPACT</option><option value="premium">PREMIUM</option></select></label><div class="modal-actions"><button type="button" class="button soft" id="cancelModal">Отмена</button><button type="submit" class="button primary" id="submitModal">Добавить игрока</button></div></form></div>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<script src="/static/common.js"></script><script src="/module-assets/hj.players/badge-sizing.js?v=040"></script><script src="/static/admin.js?v=040"></script><script src="/module-assets/hj.timer_overlay/timer.js"></script><script src="/module-assets/hj.timer_overlay/integrated.js"></script>
+<script>
+// The Exit button works both in legacy pywebview and isolated Edge app mode.
+window.addEventListener('pywebviewready', () => {
+  const exit = document.getElementById('quitDesktop');
+  if (!exit || !window.pywebview?.api?.quit) return;
+  exit.style.display = 'inline-flex';
+  exit.addEventListener('click', async () => {
+    if (confirm('Завершить HI, JACK LIVE?\nЛокальный сервер остановится, и плашки OBS отключатся.')) {
+      await window.pywebview.api.quit();
+    }
+  });
+});
+
+// In Edge --app mode the starter process can exit before the UI window.
+// An explicit, nonce-verified shutdown avoids killing OBS when this happens.
+(async () => {
+  const exit = document.getElementById('quitDesktop');
+  if (!exit || window.pywebview?.api?.quit) return;
+  try {
+    const response = await fetch('/api/desktop/edge-session', {cache: 'no-store'});
+    if (!response.ok) return; // ordinary browser diagnostics and legacy pywebview
+    const info = await response.json();
+    if (!info.edge_app || !info.quit_token) return;
+    exit.style.display = 'inline-flex';
+    exit.addEventListener('click', async () => {
+      if (!confirm('Завершить HI, JACK LIVE?\nСервер и плашки OBS будут отключены.')) return;
+      try {
+        const result = await fetch('/api/desktop/edge-quit', {
+          method: 'POST', headers: {'X-HJ-Desktop-Token': info.quit_token}
+        });
+        if (!result.ok) throw new Error('HTTP ' + result.status);
+        window.close();
+        // Some Edge app policies prohibit close() from script.
+        document.body.innerHTML = '<main style="padding:40px;font:20px sans-serif;color:white;background:#161616;height:100vh">HI, JACK LIVE завершён. Окно можно закрыть.</main>';
+      } catch (error) { alert('Не удалось завершить программу: ' + error.message); }
+    });
+  } catch (_) { /* the legacy/browser panel is not an Edge app window */ }
+})();
+</script>
+</body></html>

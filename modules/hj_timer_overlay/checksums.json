@@ -1,0 +1,23 @@
+{
+  "CHANGELOG.md": "9b04b25c595634daf814f6b3fd72ed3861bee8c4a99dad84f64e87bcb9de1823",
+  "README.md": "ab271351f3c390eebcafb32f05e3293c201508b7dc93cef15d6006096cfde70e",
+  "README_FOR_CHATGPT.md": "6f86ca551f06a82014cd16f6977fa66d744c0e0a6dfdf8d25bc95ff66777c75f",
+  "backend/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "backend/plugin.py": "e2f32efd14e36ef0043f0ead8f4d90ebd7c90b1d70e90ac95cfd777bd2cfbed6",
+  "contracts/API.md": "69c42281d5a8cd0f3f75a48c833b17812935c6bfd160fea29f955f5a6c00a39d",
+  "contracts/EVENTS.md": "b8eb784448c0873faf18682bcc7a03f48c0c66dfc49118b615a9ea98448a205a",
+  "docs/ARCHITECTURE.md": "1c954187dc192063c54545cd98957cc861b353c06c15f51f43bc02f474eba968",
+  "docs/DEPENDENCIES.md": "425c37fca2ee1d1b5d7a443dd925b325cb1bec17069857eda196bf7218707825",
+  "docs/INTEGRATION.md": "16bb4aec2bc627c90f9a2130b7f4cbf7ad6977bc7d696f97b864238097147d3f",
+  "frontend/editor.html": "6c9926b7c211c33deaa3dfb9cb7831b74bf4654d4ab6ac0b8c24f85c075576d8",
+  "frontend/editor.js": "3ab07006bf202e436f261da11f982229a70e5fe58ede1a7cf9c53c95170a768f",
+  "frontend/integrated.css": "c4088db3387256795a89dd991d74e72e1fc40caa283c3b33aff6153c55f42789",
+  "frontend/integrated.js": "0f32e71578d854f7508fcc8b515b51cbe50f7e6d3a34174f334e5e3b9ff21485",
+  "frontend/overlay.html": "8ae8753e30ae913b71536db28c659da5ef1d6648b25bb1c7c631f1f190a1e032",
+  "frontend/overlay.js": "b68d943a20814f374a436dfd18167a02613d67392f7b54d63e1e6d04f771ff42",
+  "frontend/timer.css": "e90f432a07971e1516bf4344d4a0eaea1341deecd7fa1c9246f5eed07de15624",
+  "frontend/timer.js": "0e5eb733bdbc30ac4208d52de5a49546f54e4bbf31ecb07e4072ac22da79c5d1",
+  "frontend/widget-v2.css": "90d95dd4989b32454c130c48ccc867a1248c9ce3f3fab3103d954e088e6e5739",
+  "module.json": "437c8c66f1b149682e008b34c31a87702703ac48bafef295d561d803f06c4147",
+  "tests/test_timer_overlay.py": "4a194bd68003117564539602d4bffaa33dc7acb49eb85ead56b7b890a6b0028e"
+}

@@ -1,0 +1,19 @@
+{
+  "CHANGELOG.md": "467d78ea644d901ce56b0e03d97b06590b22c71f532b9c5ad6e8ef1ed3d83776",
+  "README.md": "49b4b4a674243e77c32c9ac11cdd8a8fdd4c5027d709dc398490021d8b8668c1",
+  "README_FOR_CHATGPT.md": "11e4781c194b0adf9255c57312f2c4fac707d8e44e6b4660a6162448182043be",
+  "__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "backend/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "backend/plugin.py": "d995767eb08f57b21f2e73c88297e5722fe652cb5cb9b60be4100e3636fb2f79",
+  "contracts/API.md": "6e9680504c7946d09fa4deb36b534e3f1d023e762ed0798a204c48ad1d80048b",
+  "contracts/EVENTS.md": "c140c34fc2ee9ce8c87b75b1be30bbd90a26c9fc08d22234e7bba614853d1628",
+  "docs/ARCHITECTURE.md": "d94a4ee6be0437efc604c068e679c4c99192f7ee5b0eeaa92e5eeac12b9174cd",
+  "docs/DEPENDENCIES.md": "127b5370f6d6f98b08ee221597912b222cb67ff67d0a583db90c6aac10bad234",
+  "docs/INTEGRATION.md": "35010ecd8fa5d058fe778c1072e4e0bdc690ea5e4adbf918d9db7fdd84e12dd9",
+  "frontend/effects.html": "2ebaa76f1ea1ec97d1cd83d76846d2dacb934309c08328864ee09cdca5f12e73",
+  "frontend/effects.js": "4aaf03fc5574db0988aa66400f1cabf446eb26f10a45bc60587df6df10483ebb",
+  "frontend/style.css": "abd83c83a29f466609e25eedd6ca7201c9beaa5ab524f7cfe4df80eae4779e60",
+  "module.json": "797147e71051e090e4044f1d7569590863288c8269e0ecd9f7d64f9ff7a53cc4",
+  "tests/test_hj_effects.py": "f23ac3e1d38993752efdc64de9fcaba6d2374442ed53a1c2d807ccc1c967797f",
+  "tools/build_zip.py": "a15be9d1e8aee71b005a457f7a5fd247faf32062131922b71e4184eb9990c096"
+}

@@ -1,0 +1,25 @@
+{
+  "id": "hj.timer_overlay",
+  "name": "HJ Timer Overlay",
+  "version": "0.2.0",
+  "host_api": "1.x",
+  "entrypoint": "backend.plugin:create_plugin",
+  "provides": [
+    "timer_overlay.api"
+  ],
+  "requires": [
+    "core.storage"
+  ],
+  "optional": [],
+  "permissions": [
+    "storage.module",
+    "services.provide",
+    "ui.register"
+  ],
+  "enabled": true,
+  "ui": {
+    "title": "HJ Timer Overlay",
+    "path": "/timer-control"
+  },
+  "data_schema": 0
+}

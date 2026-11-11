@@ -1,0 +1,28 @@
+{
+  "id": "hj.effects",
+  "name": "HJ Effects",
+  "version": "0.3.0",
+  "host_api": "1.x",
+  "entrypoint": "backend.plugin:create_plugin",
+  "provides": [
+    "effects.api"
+  ],
+  "requires": [
+    "core.events",
+    "players.api"
+  ],
+  "optional": [],
+  "permissions": [
+    "state.read",
+    "events.write",
+    "services.provide",
+    "services.consume",
+    "ui.register"
+  ],
+  "enabled": true,
+  "ui": {
+    "title": "HJ Effects",
+    "path": "/overlay/effects"
+  },
+  "data_schema": 0
+}

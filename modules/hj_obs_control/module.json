@@ -1,0 +1,28 @@
+{
+  "id": "hj.obs_control",
+  "name": "HJ OBS Control",
+  "version": "0.0.0",
+  "host_api": "1.x",
+  "entrypoint": "backend.plugin:create_plugin",
+  "provides": [
+    "obs.api"
+  ],
+  "requires": [
+    "core.events"
+  ],
+  "optional": [],
+  "permissions": [
+    "obs.read",
+    "obs.write",
+    "events.read",
+    "events.write",
+    "services.provide",
+    "ui.register"
+  ],
+  "enabled": false,
+  "ui": {
+    "title": "HJ OBS Control",
+    "path": ""
+  },
+  "data_schema": 0
+}

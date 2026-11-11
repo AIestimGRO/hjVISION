@@ -1,0 +1,26 @@
+{
+  "id": "hj.vision",
+  "name": "HJ Vision",
+  "version": "0.0.0",
+  "host_api": "1.x",
+  "entrypoint": "backend.plugin:create_plugin",
+  "provides": [
+    "vision.api"
+  ],
+  "requires": [
+    "core.events"
+  ],
+  "optional": [],
+  "permissions": [
+    "events.write",
+    "events.read",
+    "storage.module",
+    "services.provide"
+  ],
+  "enabled": false,
+  "ui": {
+    "title": "HJ Vision",
+    "path": ""
+  },
+  "data_schema": 0
+}

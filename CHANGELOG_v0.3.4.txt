@@ -1,0 +1,15 @@
+HI, JACK LIVE v0.3.4 — November 11, 2026
+
+Purpose: isolate Windows 11 UI freezing and remove avoidable request delays.
+* Default GUI uses installed Microsoft Edge in isolated --app mode.
+* Existing embedded pywebview/EdgeChromium available via --webview2 for A/B testing.
+* Default UI does not force GPU-disable flags.
+* Concurrent WebSocket updates: maximum 1.5 seconds overall per broadcast,
+  rather than 1.5 seconds multiplied by the number of unresponsive clients.
+* Windows build still preserves all modules, onedir PyInstaller runtime and
+  the v0.3.3 absolute-source-path fix for --specpath.
+* Operator data and OBS API have not been modified.
+* GUI Windows run still needs target-machine verification.
+* Added 4 automated checks compared with v0.3.3 (44 passing on Linux).
+
+Note (v0.3.5): Edge starter PID may exit while the actual app window stays open; backend is no longer tied to its Popen.poll(). Use the Exit control in the main panel for immediate safe shutdown. Closing the Edge window also triggers idle cleanup if its process has terminated.

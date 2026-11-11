@@ -1,0 +1,9 @@
+{
+  "id": "emerald",
+  "name": "EMERALD",
+  "frame": "frame.svg",
+  "color": "#f3fff9",
+  "glow": "#36e9a4",
+  "accent": "#6de2b4",
+  "version": 1
+}

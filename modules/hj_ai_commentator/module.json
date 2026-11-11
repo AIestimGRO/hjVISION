@@ -1,0 +1,26 @@
+{
+  "id": "hj.ai_commentator",
+  "name": "JACK AI Commentator",
+  "version": "0.0.0",
+  "host_api": "1.x",
+  "entrypoint": "backend.plugin:create_plugin",
+  "provides": [
+    "ai.commentary"
+  ],
+  "requires": [
+    "core.events"
+  ],
+  "optional": [],
+  "permissions": [
+    "events.read",
+    "events.write",
+    "storage.module",
+    "services.consume"
+  ],
+  "enabled": false,
+  "ui": {
+    "title": "JACK AI Commentator",
+    "path": ""
+  },
+  "data_schema": 0
+}

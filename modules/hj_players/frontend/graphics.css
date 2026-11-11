@@ -1,0 +1,80 @@
+/* HI JACK THEME ENGINE V2: metal artwork + independently scalable text + state layer */
+.overlay-page,html:has(.overlay-page),.overlay-root{background:transparent!important}
+.hj-badge,.stage .hj-badge{box-sizing:border-box;position:absolute;display:block;min-height:0;padding:0;border:0;border-radius:0;background:none;box-shadow:none;overflow:visible;color:#fff;user-select:none;white-space:nowrap;line-height:1;transform:translate(-50%,-50%) rotate(var(--rotation,0deg)) scale(var(--badge-scale,1));transform-origin:center center;isolation:isolate;filter:drop-shadow(0 2px 5px #0009)}
+.hj-badge::before{display:none!important}
+.hj-badge .hj-metal{position:absolute;inset:0;display:block;box-sizing:border-box;border:solid transparent;border-width:1px;border-image-source:var(--frame-url);border-image-slice:92 190 fill;border-image-width:31% 17%;border-image-repeat:stretch;pointer-events:none;filter:drop-shadow(0 0 calc(10px * var(--badge-glow,.6)) var(--metal-glow,#db8944))}
+.hj-badge .hj-inner{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:4%;padding:0 calc(var(--badge-pad,8px) * var(--canvas-scale,1));box-sizing:border-box;min-width:0;max-width:100%}
+.hj-badge .hj-name,.stage .hj-badge .hj-name,.hj-badge.compact .hj-name,.stage .hj-badge.compact .hj-name{display:block;flex:1;min-width:0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;color:var(--metal-text,#ffe3a5);font-size:var(--font-px,24px);font-family:Georgia,'Segoe UI',serif;font-weight:850;font-style:italic;line-height:1.12;text-align:center;letter-spacing:0;text-shadow:0 1px 0 #190c07,0 1px 4px #000,0 0 8px var(--metal-glow,#dc8642);-webkit-text-stroke:.25px #562410}
+.hj-badge .hj-gem,.stage .hj-badge .hj-gem{flex:0 0 auto;color:var(--metal-text);font-family:Georgia,serif;font-size:calc(var(--font-px,24px) * .72);filter:drop-shadow(0 0 3px var(--metal-glow));}
+.hj-badge .hj-caption,.stage .hj-badge .hj-caption{flex:0 0 auto;color:var(--metal-text);font-family:'Segoe UI',sans-serif;font-size:calc(var(--font-px,24px) * .37);letter-spacing:0;opacity:.9}
+.hj-badge.compact .hj-caption{display:none}
+.hj-badge.compact .hj-gem{font-size:calc(var(--font-px,24px) * .6)}
+.hj-badge.premium .hj-metal{filter:drop-shadow(0 0 calc(18px * var(--badge-glow,.6)) var(--metal-glow)) drop-shadow(0 4px 10px #000b)}
+.hj-badge.status-all-in .hj-metal{filter:drop-shadow(0 0 16px var(--metal-glow))}
+.hj-badge.status-fold{filter:grayscale(.86);opacity:.55!important}
+.hj-badge.status-winner .hj-name{color:#fff6c5;text-shadow:0 0 10px #f6d26d,0 2px 3px #000}
+.hj-badge.hidden-badge{display:none}
+.hj-badge.ghost-badge{opacity:.38!important;filter:grayscale(.6)}
+.hj-badge.selected{outline:1px dashed #ffc784;outline-offset:4px;z-index:5}
+.stage.editable .hj-badge{cursor:grab;pointer-events:auto}
+.stage.editable .hj-badge.dragging{cursor:grabbing;z-index:10}
+.hj-badge .hj-resize-handle{display:none;position:absolute;right:-5px;bottom:-5px;height:11px;width:11px;background:#ffd093;border:2px solid #362010;border-radius:3px;cursor:nwse-resize;z-index:20;pointer-events:auto;box-shadow:0 0 4px #000}
+.stage.editable .hj-badge.selected .hj-resize-handle{display:block}
+.stage.editable .hj-badge.selected .hj-resize-handle:hover{background:#fff}
+.stage .hj-badge{padding:0;border:0;background:transparent;border-radius:0;min-height:0}
+.hj-badge.badge-enter{animation:hjAppear .3s ease-out}
+.theme-select{background:#292522;border:1px solid #564132;border-radius:7px;color:#f7e7ca;padding:10px;font-size:12px}
+.theme-toolbar{display:flex;flex-wrap:wrap;align-items:center;gap:12px;padding:0 22px 18px}
+.theme-toolbar label{font-size:10px;color:#d2a477;font-weight:800;letter-spacing:.6px}
+.theme-toolbar label select{display:block;margin-top:6px;width:190px}
+.theme-cards{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;width:100%}
+.theme-card{display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:0;gap:5px;padding:10px 5px;background:#19191a;border:1px solid #3b3632;border-radius:8px;color:#d5c4af;font-size:9px;cursor:pointer}
+.theme-card img{width:100%;max-width:115px;aspect-ratio:4/1;object-fit:contain}
+.theme-card.selected{border-color:#f0a452;background:#322015;box-shadow:0 0 0 1px #b67a45}
+.theme-card span{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.prop-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.prop-grid label select{display:block;margin-top:8px;width:100%;font-size:12px}
+.prop-grid label input[type=number]{width:75px;background:#24201b;border:1px solid #645039;color:#f1d4aa;padding:6px;border-radius:4px;margin-top:7px}
+.prop-grid .prop-action{background:#35271b;border:1px solid #765338;color:#f1bb7b;padding:8px;border-radius:6px;align-self:end}
+@media(max-width:800px){.theme-cards{grid-template-columns:repeat(3,1fr)}.theme-toolbar{padding:0 12px 13px}.prop-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* HJ PLAYERS 0.3.6 — quick physical-box layout and portrait badges. */
+.quick-rotate{display:flex;align-items:center;gap:9px;flex-wrap:wrap;padding:8px 23px 4px;color:#d9b489;font-size:11px}
+.quick-rotate strong{margin-right:6px}
+.quick-rotate .button{padding:9px 13px}
+.quick-rotate span{color:#a69c8e;font-size:10px}
+#publishTop{box-shadow:0 0 0 1px #ffda85aa,0 0 18px #c17a3766}
+#editorBar{order:0}
+@media(max-width:1100px){.quick-rotate{padding:9px 13px}.editor-bar>div:last-child{flex-wrap:wrap}}
+
+/* HJ PLAYERS 0.3.7 — big WYSIWYG camera reference, fixed 16:9 preview. */
+.dashboard.editor-wide{grid-template-columns:minmax(0,1fr)}
+.dashboard.editor-wide>.stage-column,.dashboard.editor-wide>.right-column{width:100%;min-width:0}
+.frame-ratio{display:inline-block;vertical-align:middle;padding:4px 7px;margin-left:6px;color:#cfaa7d;background:#2b221a;border:1px solid #755338;border-radius:5px;font-size:10px;font-weight:700;letter-spacing:.3px;white-space:nowrap}
+.frame-focus-button{white-space:nowrap;padding:10px 12px;font-size:11px}
+.frame-guide{padding:11px 21px 0;color:#d1af82;font-size:11px;line-height:1.5}
+/* All editor and OBS badge locations use the same normalized 1920 x 1080 canvas. */
+.stage{width:100%;aspect-ratio:16 / 9;height:auto}
+.stage-background{background-size:100% 100%;background-repeat:no-repeat;background-color:#000}
+@media(max-width:850px){.frame-ratio{display:block;width:max-content;margin:6px 0 0}.frame-focus-button{padding:9px 8px;font-size:10px}.frame-guide{padding:10px 12px 0}}
+
+/* 0.3.8 — Preview size is responsive and always 16:9. No pixel-resolution switch may enlarge the table. */
+.stage-wrap{min-width:0}
+.stage{width:100%;max-width:100%;aspect-ratio:16 / 9;height:auto;min-height:0;container-type:inline-size}
+@media(max-width:650px){.dashboard.editor-wide{grid-template-columns:minmax(0,1fr)}.stage{max-width:100%}}
+
+/* v0.3.9 — two-level badge setup, simple controls immediately below the camera. */
+.badge-settings-head{flex-wrap:wrap;gap:10px}
+.badge-mode-switch{display:flex;align-items:center;gap:4px;padding:4px;background:#111312;border:1px solid #4d3d2e;border-radius:9px}
+.badge-mode-switch .button{padding:10px 13px;font-size:11px}
+.badge-mode-switch .button.active{background:#865b36;color:#fff4dc;border-color:#d19860}
+.quick-rotate{padding:9px 23px;gap:8px}
+.quick-rotate .button.active{background:#865b36;color:#fff4dc;border-color:#dda266}
+.quick-rotate strong{flex-basis:100%;font-size:12px;color:#edc899;margin-bottom:4px}
+.badge-quick-help{padding:4px 23px 18px;margin:0;font-size:11px;color:#aaa399;line-height:1.5}
+.badge-advanced-options[hidden]{display:none!important}
+.badge-advanced-heading{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;padding:15px 23px 4px;border-top:1px solid #38332e;color:#e7c095;font-size:12px;font-weight:700}
+.badge-advanced-note{margin:0;padding:7px 23px 0;color:#9d9589;font-size:11px}
+/* Large grip stays clickable on small editor previews and on vertically rotated badges. */
+.stage.editable .hj-badge.selected .hj-resize-handle{height:15px;width:15px;right:-8px;bottom:-8px;border:2px solid #5a371b;box-shadow:0 0 0 3px #0008,0 0 6px #ffe0a466}
+@media(max-width:650px){.badge-quick-help{padding:4px 12px 14px}.badge-advanced-heading{padding:12px}.badge-advanced-note{padding:6px 12px 0}.badge-settings-head{align-items:flex-start}.quick-rotate{padding:8px 12px}}

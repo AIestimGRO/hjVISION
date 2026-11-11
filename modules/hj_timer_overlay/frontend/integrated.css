@@ -1,0 +1,26 @@
+/* Component-only timer CSS: do NOT import timer.css into HJ PLAYERS (that file styles html/body and all .panel/.stage). */
+.timer-widget{--accent:#c88f57;position:absolute;left:50%;top:9%;width:28.5%;transform:translate(-50%,-50%);color:#f9f1e6;background:linear-gradient(135deg,rgba(19,19,19,.95),rgba(40,29,20,.88));border:1px solid rgba(195,132,73,.7);border-radius:calc(0.65cqw);padding:calc(.65cqw) calc(.85cqw);box-shadow:0 5px 18px #000b,inset 0 1px 0 #ffffff16;user-select:none;white-space:nowrap;pointer-events:none}.timer-widget .timer-head{display:flex;justify-content:space-between;align-items:center;gap:6px;font-size:1.0cqw;font-weight:750;letter-spacing:.09em;color:#bca894}.timer-widget .timer-head .clock-status{font-size:.82cqw;color:#c69361}.timer-widget .timer-body{display:flex;justify-content:space-between;gap:8px;align-items:baseline;margin-top:.18cqw;font-variant-numeric:tabular-nums}.timer-widget .blinds{font-size:2.15cqw;font-weight:800;letter-spacing:-.03em;color:#ffe9cd;overflow:hidden;text-overflow:ellipsis}.timer-widget .countdown{font-size:2.28cqw;font-weight:800;color:#eac194;letter-spacing:-.02em}.timer-widget .ante{font-size:.95cqw;color:#ba9b7d;margin-top:.08cqw;letter-spacing:.07em}.timer-widget .live-dot{display:inline-block;background:#79c97d;width:.39cqw;height:.39cqw;border-radius:50%;box-shadow:0 0 5px #66d46c80;margin-right:.3cqw}.timer-widget.paused .live-dot{background:#e3ae59;box-shadow:none}.timer-widget.offline .live-dot{background:#b16962;box-shadow:none}.timer-widget.stacked .timer-body{flex-direction:column;align-items:center;gap:0}.timer-widget.stacked .blinds{font-size:2.1cqw}.timer-widget.stacked .countdown{font-size:2.25cqw}.timer-widget.stacked .timer-head{justify-content:center}.timer-widget.stacked .timer-head .clock-status{margin-left:.4cqw}.timer-widget.stacked .ante{text-align:center}.timer-widget.editable{pointer-events:auto;cursor:grab;outline:2px dashed #e5b57d;outline-offset:3px}.timer-widget.dragging{cursor:grabbing}.timer-widget.offline{opacity:.85}
+.timer-widget.hidden{display:none!important}
+/* The timer is edited INSIDE the existing HJ PLAYERS 16:9 scene. */
+.hjt-stage-widget{z-index:4;max-width:none}
+.stage.editable .hjt-stage-widget.editable{pointer-events:auto;cursor:grab;touch-action:none;outline:1px dashed #e8b573;outline-offset:3px}
+.stage.editable .hjt-stage-widget.dragging{cursor:grabbing;z-index:9}
+.hjt-stage-widget:not(.editable){pointer-events:none}
+.hjt-panel .panel-head{padding-bottom:13px}
+.hjt-panel-body{display:flex;flex-direction:column;gap:12px;padding:0 22px 20px}
+.hjt-panel-body label:not(.hjt-check){display:block;font-size:11px;color:#c4afa0}
+.hjt-panel-body select{display:block;width:100%;max-width:none;background:#272522;border:1px solid #62513f;color:#f5dec1;border-radius:7px;padding:10px 12px;margin-top:6px}
+.hjt-panel-body input[type=range]{display:block;width:100%;accent-color:#d28f4e;margin-top:10px}
+.hjt-panel-body output{float:right;color:#e9b982;font-weight:750}
+.hjt-panel-body .hjt-check{display:flex;gap:8px;align-items:center;font-size:11px;color:#e8d5bc}
+.hjt-panel-body input[type=checkbox]{accent-color:#d29c66}
+.hjt-inline-checks{display:flex;gap:17px;flex-wrap:wrap}
+.hjt-actions{display:flex;gap:8px;flex-wrap:wrap}
+.hjt-panel-body .hjt-feedback{font-size:11px;color:#b5caaa;margin:0;min-height:12px}
+.hjt-panel-body .hjt-feedback.error{color:#f3a9a0}
+.hjt-panel-body .hjt-note{margin:0;font-size:11px;color:#a9a099;line-height:1.55}
+.hjt-connection{font-size:10px;color:#cf9d62;border:1px solid #56442c;border-radius:5px;padding:5px 8px;white-space:nowrap}
+.hjt-connection.ok{color:#94d8a2;border-color:#477c56}
+.hjt-url{border-top:1px solid #4b3c2e;padding-top:12px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:11px;color:#ba9b7e}
+.hjt-url code{flex:1;min-width:160px;overflow-wrap:anywhere;color:#e8c9a0}
+.hjt-absent{color:#cfb497;font-size:11px}

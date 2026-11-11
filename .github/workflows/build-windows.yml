@@ -1,0 +1,39 @@
+name: Build HI JACK LIVE Windows 11 native desktop
+on:
+  workflow_dispatch:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+jobs:
+  tests:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install -r requirements-dev.txt
+      - run: python -m pytest -q
+  bundle:
+    needs: tests
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install -r requirements-build.txt
+      - shell: pwsh
+        run: |
+          & "$env:pythonLocation\python.exe" -m PyInstaller --noconfirm --clean --onefile --windowed --name HiJackLive --add-data 'core/ui;core/ui' --collect-submodules uvicorn --collect-submodules fastapi --collect-submodules webview --collect-data webview --hidden-import clr --hidden-import uvicorn.logging --hidden-import uvicorn.loops.auto --hidden-import uvicorn.protocols.http.auto --hidden-import uvicorn.protocols.websockets.auto --hidden-import uvicorn.lifespan.on launcher.py
+          New-Item -ItemType Directory -Force dist/HI_JACK_LIVE | Out-Null
+          Copy-Item dist/HiJackLive.exe dist/HI_JACK_LIVE/HiJackLive.exe
+          Copy-Item modules dist/HI_JACK_LIVE/modules -Recurse
+          & dist/HI_JACK_LIVE/HiJackLive.exe --self-test
+          if ($LASTEXITCODE -ne 0) { throw 'EXE self-test failed' }
+      - uses: actions/upload-artifact@v4
+        with:
+          name: HI-JACK-LIVE-Windows11-native
+          path: dist/HI_JACK_LIVE/
+          if-no-files-found: error

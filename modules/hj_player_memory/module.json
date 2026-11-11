@@ -1,0 +1,25 @@
+{
+  "id": "hj.player_memory",
+  "name": "HJ Player Memory",
+  "version": "0.0.0",
+  "host_api": "1.x",
+  "entrypoint": "backend.plugin:create_plugin",
+  "provides": [
+    "players.memory"
+  ],
+  "requires": [
+    "core.storage"
+  ],
+  "optional": [],
+  "permissions": [
+    "storage.module",
+    "events.read",
+    "services.provide"
+  ],
+  "enabled": false,
+  "ui": {
+    "title": "HJ Player Memory",
+    "path": ""
+  },
+  "data_schema": 0
+}

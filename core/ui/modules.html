@@ -1,0 +1,20 @@
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>HI, JACK LIVE — Модули</title>
+<style>
+:root{color-scheme:dark}*{box-sizing:border-box}body{background:radial-gradient(ellipse at top,#2e1e14,#090b0e 65%);font:15px/1.55 'Segoe UI',Arial,sans-serif;color:#f7e5cd;margin:0;min-height:100vh}
+.container{max-width:1100px;margin:auto;padding:26px 24px 80px}header{display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #ac754555;padding-bottom:18px}h1{font-size:30px;color:#e6a55f;margin:16px 0 0}h2{font-size:20px}a{color:#efb97e;text-decoration:none}.subtitle{color:#b9a28d;margin:3px 0 25px}
+.card{border:1px solid #90613c77;border-radius:18px;background:#14171bdd;padding:20px;margin:16px 0;box-shadow:0 16px 32px #0004}
+button,input::file-selector-button{font:600 14px 'Segoe UI',sans-serif;background:linear-gradient(#8d512b,#643414);border:1px solid #ce8e52;color:#fff3e2;padding:10px 16px;border-radius:10px;cursor:pointer}button:disabled{opacity:.4;cursor:default}.subtle{background:#1a1d23;border-color:#6e5d4c}
+.danger{background:#41211c;border-color:#915340}.muted{color:#aaa6a2}.note{padding:12px 16px;border-left:3px solid #d59a5d;background:#47332152;margin:10px 0 18px}
+.row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}.row>*{max-width:100%}input[type=file]{max-width:100%;padding:10px;background:#111419;border:1px dashed #80654a;border-radius:8px}
+.module{padding:15px 0;border-bottom:1px solid #ffffff16;display:flex;align-items:center;justify-content:space-between;gap:8px}.module:last-child{border:0}.module strong{font-size:16px}.badge{display:inline-block;font-size:11px;color:#eee;background:#333;padding:2px 7px;margin-left:8px;border-radius:8px}.ok{color:#91dbac}.warn{color:#f4b36a}.error{color:#ff9898}pre{white-space:pre-wrap;word-break:break-word;padding:16px;background:#0b0f12;border-radius:12px;border:1px solid #644e33;color:#ead6bb}
+#result{min-height:24px}.foot{font-size:12px;color:#ae9780}
+</style></head><body><main class="container"><header><div><strong>♠ HI, JACK LIVE</strong> <span class="muted">/ CORE 0.3.0</span></div><a href="/admin">Вернуться к эфиру</a></header>
+<h1>Модули и обновления</h1><p class="subtitle">Отдельные блоки, совместимые с CORE API 1.x. Данные и рассадка сохраняются вне папок модулей.</p>
+<div class="note">Обновляйте модули <b>только между трансляциями</b>. Если OBS-оверлей подключён, установка и откат заблокированы. Устанавливайте только ZIP из доверенного источника: Python-модули являются исполняемым кодом.</div>
+<section class="card"><h2>Установленные модули</h2><div id="modules">Загружаю...</div><div class="foot" id="connection"></div></section>
+<section class="card"><h2>Установить обновление модуля</h2>
+<p>Выберите ZIP одной папки <code>hj_players/</code> или другого модуля, созданный через упаковщик и содержащий <code>checksums.json</code>. Сначала проверьте пакет.</p>
+<div class="row"><input id="zip" type="file" accept=".zip,application/zip"><button id="validate">1. Проверить ZIP</button><button id="install" disabled>2. Установить</button></div>
+<div id="packageInfo"></div><div class="row" style="margin-top:15px"><label><input id="trust" type="checkbox"> Я доверяю происхождению этого ZIP и понимаю, что он содержит исполняемый код.</label></div>
+<div id="result"></div></section><p class="foot">После установки / отката перезапустите HI, JACK LIVE для загрузки новой версии. Восстановление предыдущего модуля не удаляет пользовательские данные.</p></main>
+<script src="/static/common.js"></script><script src="/static/modules.js"></script></body></html>

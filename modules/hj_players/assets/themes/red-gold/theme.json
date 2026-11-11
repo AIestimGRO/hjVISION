@@ -1,0 +1,9 @@
+{
+  "id": "red-gold",
+  "name": "RED GOLD",
+  "frame": "frame.svg",
+  "color": "#ffe3a1",
+  "glow": "#fe5637",
+  "accent": "#f6b05d",
+  "version": 1
+}

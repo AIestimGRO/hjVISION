@@ -1,0 +1,9 @@
+HI, JACK LIVE v0.3.5 - Edge lifecycle reliability fix (2026-11-11)
+
+- Prevented premature localhost shutdown when Edge hands off its initial process.
+- Preserves local OBS server during transient unresponsive UI; logs starter handoffs and missed heartbeats.
+- Checks browser profile processes rather than trusting only the launcher PID.
+- Adds an explicit, nonce-verified Quit button inside the Edge control panel.
+- Adds Windows process watcher dependency psutil and simulated regression tests.
+- Version includes original v0.3.4 fixes; no data migration and no SQLite deletion.
+- Needs real Windows 11 validation; source tests on Linux are not a GUI certification.

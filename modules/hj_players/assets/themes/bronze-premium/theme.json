@@ -1,0 +1,9 @@
+{
+  "id": "bronze-premium",
+  "name": "BRONZE PREMIUM",
+  "frame": "frame.svg",
+  "color": "#fce2a0",
+  "glow": "#ffab46",
+  "accent": "#c8844a",
+  "version": 1
+}

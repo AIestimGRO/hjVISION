@@ -1,0 +1,5 @@
+-r requirements.txt
+pyinstaller>=6,<7
+
+# Native Win11 window using Edge WebView2 (no external browser tab).
+pywebview>=5,<7

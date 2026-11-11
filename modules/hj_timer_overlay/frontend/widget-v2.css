@@ -1,0 +1,33 @@
+/* HJ TIMER 0.2.0: crisp 1920x1080 OBS compositor. All text/borders rendered by the browser, no bitmapped plates. */
+.timer-widget {
+  font-family:"Segoe UI Variable Display","Segoe UI",Arial,sans-serif;
+  font-kerning:normal;
+  font-variant-numeric:tabular-nums lining-nums;
+  text-rendering:optimizeLegibility;
+  -webkit-font-smoothing:antialiased;
+  contain:layout style;
+  background:linear-gradient(150deg,rgba(25,24,23,.97),rgba(21,17,16,.94) 55%,rgba(53,34,21,.90));
+  border:1px solid rgba(239,169,96,.82);
+  box-shadow:0 4px 16px #0009,0 0 0 1px #19130e,inset 0 1px 0 #fff3,inset 0 -1px 0 #a9632d60;
+}
+.timer-widget .timer-body {align-items:center;gap:.48cqw;margin-top:.16cqw;line-height:1.0}
+.timer-widget .blinds,
+.timer-widget .countdown {font-weight:850;line-height:1.02;letter-spacing:-.032em;text-overflow:clip;text-shadow:0 1px 0 #120b06,0 2px 7px #000b}
+.timer-widget .blinds {font-size:2.35cqw;color:#fff1db;flex:1;min-width:0}
+.timer-widget .countdown {font-size:2.46cqw;color:#f1bf7c;flex:0 0 auto}
+.timer-widget .timer-head {font-size:.98cqw;letter-spacing:.07em;line-height:1.12}
+.timer-widget .timer-head .clock-status{font-size:.8cqw;white-space:nowrap}
+.timer-widget .ante {font-size:1.0cqw;margin-top:.12cqw}
+.timer-widget.minimal {background:rgba(9,12,14,.88);border:1px solid #f7deb288;box-shadow:0 3px 12px #0009;padding:.52cqw .8cqw}
+.timer-widget.minimal .timer-head .clock-status {opacity:.75}
+.timer-widget.minimal .countdown{color:#fff5e5}
+.timer-widget.premium {border:2px solid transparent;
+ background:linear-gradient(145deg,#2c201aeF,#100f10fa 70%,#302119ed) padding-box,
+ linear-gradient(135deg,#fee4b3,#a65f2c 18%,#f6b572 35%,#42200e 62%,#ecb77d 85%,#754320) border-box;
+ box-shadow:0 5px 19px #000b,inset 0 1px 0 #fff4,0 0 11px #c47a3455}
+.timer-widget.premium .blinds{color:#ffe6b8;text-shadow:0 2px 5px #000,0 0 7px #bb6a3933}
+.timer-widget.premium .countdown{color:#ffc77e;text-shadow:0 2px 5px #000,0 0 7px #b7742444}
+.timer-widget.stacked .timer-body {gap:0}
+.timer-widget.stacked .blinds,.timer-widget.stacked .countdown{font-size:2.15cqw}
+.timer-widget .timer-head .clock-status{display:flex;align-items:center}
+@media (prefers-reduced-motion:reduce){.timer-widget{transition:none!important;animation:none!important}}

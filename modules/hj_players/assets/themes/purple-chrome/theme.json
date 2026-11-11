@@ -1,0 +1,9 @@
+{
+  "id": "purple-chrome",
+  "name": "PURPLE CHROME",
+  "frame": "frame.svg",
+  "color": "#faf0ff",
+  "glow": "#ac6eff",
+  "accent": "#b7a4ff",
+  "version": 1
+}
