@@ -1,7 +1,7 @@
 {
   "id": "hj.ai_commentator",
   "name": "JACK AI Commentator",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "host_api": "1.x",
   "entrypoint": "backend.plugin:create_plugin",
   "provides": [
