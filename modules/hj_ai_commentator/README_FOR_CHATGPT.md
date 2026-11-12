@@ -1,7 +1,7 @@
 # Instructions for updating JACK AI Commentator in a separate ChatGPT conversation
 
-Module ID: `hj.ai_commentator`. Version: `0.0.0`. CORE public API: `1.x`.
-Status: placeholder; do not describe as functional.
+Module ID: `hj.ai_commentator`. Version: `0.1.0` (feature branch). CORE public API: `1.x`.
+Status: disabled-by-default offline template preview prototype; not an AI commentator, no TTS, OBS output or Training Sync.
 
 ## Responsibilities and files
 - `backend/plugin.py`: entrypoint `create_plugin()` -> `Plugin.register(app, ctx, folder)` and `self_check()`.
@@ -38,4 +38,4 @@ Rollback: same screen -> Rollback; persistent SQLite data is not inside module f
 No new third-party imports unless dependencies are bundled with a compatible Windows build.
 
 ## Current state
-This is only a directory and manifest placeholder. It does not supply any working functionality.
+Version 0.1.0 has a confirmation-gated offline template preview endpoint and tests; full AI functionality remains unimplemented.
