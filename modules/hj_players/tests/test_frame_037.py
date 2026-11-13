@@ -26,7 +26,7 @@ def test_camera_reference_never_crops_or_changes_obs_state():
     assert 'img.width/img.height-16/9' in js
     assert 'localStorage.setItem(`hj-preview-${profileId}`' in js
     assert 'POST /api' not in js[js.index("$('screenshotFile').onchange"):js.index("$('removeScreenshot').onclick")]
-    assert json.loads((ROOT/'module.json').read_text(encoding='utf8'))['version']=='0.3.10'
+    assert json.loads((ROOT/'module.json').read_text(encoding='utf8'))['version']=='0.3.11'
 
 def test_camera_upload_fit_math_for_common_inputs():
     for src_w,src_h in [(1920,1080),(3840,2160),(1403,600),(1440,1080),(1080,1920)]:
