@@ -78,3 +78,20 @@
 /* Large grip stays clickable on small editor previews and on vertically rotated badges. */
 .stage.editable .hj-badge.selected .hj-resize-handle{height:15px;width:15px;right:-8px;bottom:-8px;border:2px solid #5a371b;box-shadow:0 0 0 3px #0008,0 0 6px #ffe0a466}
 @media(max-width:650px){.badge-quick-help{padding:4px 12px 14px}.badge-advanced-heading{padding:12px}.badge-advanced-note{padding:6px 12px 0}.badge-settings-head{align-items:flex-start}.quick-rotate{padding:8px 12px}}
+
+/* HJ PLAYERS — circular portraits; all sizing is relative to the live badge.
+   Avatar mode preserves badge x/y and scales with the existing editor handles. */
+.hj-badge.hj-has-avatar .hj-player-avatar {
+  display:block;flex:0 0 auto;height:94%;width:auto;aspect-ratio:1/1;
+  object-fit:cover;object-position:center;border-radius:50%;
+  box-sizing:border-box;border:clamp(1px, .16cqw, 4px) solid #bf8347;
+  box-shadow:0 0 0 1px #f8d8a2,0 0 12px #c97938b3,0 3px 10px #000a;
+  background:#1b140f;pointer-events:none;
+}
+.hj-badge.hj-avatar-only .hj-metal,
+.hj-badge.hj-avatar-only .hj-name,
+.hj-badge.hj-avatar-only .hj-caption {display:none!important}
+.hj-badge.hj-avatar-only .hj-inner {padding:0;justify-content:center;overflow:visible}
+.hj-badge.hj-avatar-only .hj-player-avatar {height:100%;max-width:none}
+.hj-badge.hj-avatar-with-name .hj-inner {gap:3%}
+.hj-badge.hj-avatar-with-name .hj-player-avatar {height:83%}
