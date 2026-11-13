@@ -37,3 +37,29 @@
     HJ.fitBadge(el);
   };
 })();
+
+/* HJ PLAYERS avatar mode — same rendering in editor and OBS. */
+(() => {
+  if (typeof HJ === 'undefined') return;
+  const makeOriginal = HJ.makeBadge;
+  HJ.makeBadge = function(player, placement, selected, settings) {
+    const badge = makeOriginal(player, placement, selected, settings);
+    const mode = player.display_mode || 'nickname';
+    if (mode === 'nickname' || !player.avatar_revision) return badge;
+    badge.classList.add('hj-has-avatar');
+    badge.classList.add(mode === 'avatar' ? 'hj-avatar-only' : 'hj-avatar-with-name');
+    const inner = badge.querySelector('.hj-inner');
+    if (inner) {
+      const picture = document.createElement('img');
+      picture.className = 'hj-player-avatar';
+      picture.alt = '';
+      picture.draggable = false;
+      picture.src = '/api/players/' + encodeURIComponent(player.id) +
+                    '/avatar?v=' + encodeURIComponent(player.avatar_revision);
+      picture.onerror = () => { badge.classList.remove('hj-avatar-only','hj-avatar-with-name','hj-has-avatar'); picture.remove(); };
+      inner.prepend(picture);
+      inner.querySelector('.hj-gem')?.remove();
+    }
+    return badge;
+  };
+})();

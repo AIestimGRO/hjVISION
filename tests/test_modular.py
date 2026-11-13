@@ -30,7 +30,7 @@ def make_package(folder, version=None, mutate=None):
         tmp=Path(td)/folder.name
         shutil.copytree(folder,tmp,ignore=shutil.ignore_patterns('checksums.json','__pycache__','*.pyc'))
         if version:
-            data=json.loads((tmp/'module.json').read_text())
+            data=json.loads((tmp/'module.json').read_text(encoding='utf-8'))
             data['version']=version
             (tmp/'module.json').write_text(json.dumps(data))
         if mutate:mutate(tmp)
@@ -80,7 +80,7 @@ def test_player_can_move_to_a_new_module_bundle_without_data_loss(tmp_path):
         assert check_manifest(mods/'hj_players')['version']=='0.3.9'
         rollback=c.post('/api/modules/hj.players/rollback')
         assert rollback.status_code==200,rollback.text
-    assert check_manifest(mods/'hj_players')['version']=='0.3.10'
+    assert check_manifest(mods/'hj_players')['version']=='0.3.11'
     with TestClient(create_app(db,modules_dir=mods)) as c:
         assert c.get('/api/state').json()['players']==old['players']
 
@@ -90,7 +90,7 @@ def test_reject_wrong_api_and_modified_files_without_mutating_module(tmp_path):
     updater=UpdateManager(mods,db.parent)
     before=(mods/'hj_players/module.json').read_bytes()
     def break_api(folder):
-        p=folder/'module.json';d=json.loads(p.read_text());d['host_api']='2.x';p.write_text(json.dumps(d))
+        p=folder/'module.json';d=json.loads(p.read_text(encoding='utf-8'));d['host_api']='2.x';p.write_text(json.dumps(d))
     bad=make_package(mods/'hj_players',version='0.4.0',mutate=break_api)
     with pytest.raises(ValueError,match='Incompatible'):updater.validate(bad)
     good=make_package(mods/'hj_players',version='0.3.9')
@@ -121,7 +121,7 @@ def test_updating_forbidden_during_overlay_connection(tmp_path):
             assert c.get('/api/modules').json()['overlay_connections']==1
             r=c.post('/api/modules/install',content=payload,headers={'Content-Type':'application/zip'})
             assert r.status_code==409
-        assert check_manifest(mods/'hj_players')['version']=='0.3.10'
+        assert check_manifest(mods/'hj_players')['version']=='0.3.11'
 
 
 def test_independent_disable_preserves_players(tmp_path):
@@ -144,12 +144,12 @@ def test_failed_atomic_swap_restores_old_module(tmp_path,monkeypatch):
     import core.update_manager as mod
     real_replace=mod.os.replace
     def fail_replace(src,dst):
-        if str(src).endswith('/hj_players') and '/updates/hj-stage-' in str(src) and Path(dst)==mods/'hj_players':
+        if Path(src).name=='hj_players' and any(part.startswith('hj-stage-') for part in Path(src).parts) and Path(dst)==mods/'hj_players':
             raise OSError('Simulated disk failure')
         return real_replace(src,dst)
     monkeypatch.setattr(mod.os,'replace',fail_replace)
     with pytest.raises(OSError,match='Simulated'):updater.install(payload,{'core.events','core.state','core.storage'})
-    assert check_manifest(mods/'hj_players')['version']=='0.3.10'
+    assert check_manifest(mods/'hj_players')['version']=='0.3.11'
 
 
 def test_event_bus_contract_and_namespaced_storage(tmp_path):
@@ -171,7 +171,7 @@ def test_event_bus_contract_and_namespaced_storage(tmp_path):
 def test_module_data_migration_is_versioned_and_backed_up(tmp_path):
     mods,db=sandbox(tmp_path)
     folder=mods/'hj_players'
-    manifest=json.loads((folder/'module.json').read_text())
+    manifest=json.loads((folder/'module.json').read_text(encoding='utf-8'))
     manifest['data_schema']=1
     (folder/'module.json').write_text(json.dumps(manifest))
     (folder/'migrations/0001_settings.py').write_text("def upgrade(storage):\n    storage.set('banner', 'BRONZE')\n")
@@ -192,12 +192,12 @@ def test_startup_failing_updated_module_automatically_rolls_back(tmp_path):
         assert r.status_code==200
     assert check_manifest(mods/'hj_players')['version']=='0.3.9'
     path=mods/'hj_players/backend/plugin.py'
-    code=path.read_text()
-    path.write_text(code.replace("return clean_nickname('Тест')=='Тест' and 'compact' in ALLOWED_STYLES",'return False'))
+    code=path.read_text(encoding='utf-8')
+    path.write_text(code.replace("return clean_nickname('Тест')=='Тест' and 'compact' in ALLOWED_STYLES",'return False'),encoding='utf-8')
     # Startup validates the updated module, sees the failed self-test,
     # restores last known module code, and constructs a fresh route table.
     with TestClient(create_app(db,modules_dir=mods)) as c:
         status={m['id']:m['status'] for m in c.get('/api/modules').json()['modules']}
         assert status['hj.players']=='loaded'
         assert c.get('/api/state').json()['players'][0]['nickname']=='STILL HERE'
-    assert check_manifest(mods/'hj_players')['version']=='0.3.10'
+    assert check_manifest(mods/'hj_players')['version']=='0.3.11'
