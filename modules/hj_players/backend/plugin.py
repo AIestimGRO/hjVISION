@@ -194,7 +194,7 @@ class Plugin:
             if request.headers.get('content-type','').split(';')[0].strip().lower()!='image/jpeg':
                 raise HTTPException(415,'Загрузите JPEG')
             image=await request.body()
-            if len(image)<100 or len(image)>400_000 or not image.startswith(b'\\xff\\xd8\\xff') or not image.endswith(b'\\xff\\xd9'):
+            if len(image)<100 or len(image)>400_000 or not image.startswith(bytes.fromhex('ffd8ff')) or not image.endswith(bytes.fromhex('ffd9')):
                 raise HTTPException(400,'JPEG должен быть корректным и не более 400 КБ')
             target=avatar_dir/(pid+'.jpg')
             temp=avatar_dir/(pid+'.'+uuid4().hex+'.tmp')
