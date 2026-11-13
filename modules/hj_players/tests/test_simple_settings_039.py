@@ -35,7 +35,7 @@ def test_font_autosizing_is_module_local_and_loaded_in_both_uis():
     assert 'height * canvas.clientHeight * .65' in script
     for filename in ('admin.html','players.html'):
         page=(HERE/filename).read_text('utf-8')
-        assert '/module-assets/hj.players/'+name+'?v=040' in page
+        assert '/module-assets/hj.players/'+name+'?v=041' in page
         assert page.index('/static/common.js') < page.index(name)
     # This is a standalone HJ PLAYERS ZIP, not an update to CORE.
     assert not (HERE.parents[1]/'core').exists()
