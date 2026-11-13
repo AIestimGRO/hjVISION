@@ -37,3 +37,33 @@ jobs:
           name: HI-JACK-LIVE-Windows11-native
           path: dist/HI_JACK_LIVE/
           if-no-files-found: error
+
+  players-module-zip:
+    needs: tests
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - shell: pwsh
+        run: |
+          @'
+          import hashlib, json, zipfile
+          from pathlib import Path
+          root = Path("modules/hj_players")
+          files = sorted(p for p in root.rglob("*") if p.is_file() and p.name != "checksums.json"
+                         and p.suffix != ".pyc" and "__pycache__" not in p.parts)
+          sums = {p.relative_to(root).as_posix(): hashlib.sha256(p.read_bytes()).hexdigest() for p in files}
+          with zipfile.ZipFile("HJ_PLAYERS_v0.3.11_UPDATE.zip", "w", zipfile.ZIP_DEFLATED) as z:
+              for p in files:
+                  z.write(p, "hj_players/" + p.relative_to(root).as_posix())
+              z.writestr("hj_players/checksums.json", json.dumps(sums, ensure_ascii=False, indent=2))
+          print("Packaged", len(files), "files with SHA256")
+          '@ | Set-Content -Encoding utf8 make_players_zip.py
+          python make_players_zip.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: HJ-PLAYERS-v0.3.11-update
+          path: HJ_PLAYERS_v0.3.11_UPDATE.zip
+          if-no-files-found: error
