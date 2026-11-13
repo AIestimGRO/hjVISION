@@ -16,3 +16,7 @@ html:has(.overlay-page),.overlay-page{background:transparent!important;margin:0;
 /* Saved per-club badge appearance preset (advanced editor only). */
 .badge-preset-actions{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0 6px;}
 .badge-preset-actions .button{min-height:36px;}
+
+/* v0.3.11 — avatar controls */
+.player-row .avatar-upload {font-size:16px;min-width:27px;cursor:pointer}
+.player-row select.avatar-mode {max-width:105px;min-width:75px;padding:5px 2px;font-size:10px;background:#2b2420;color:#edd1a8;border:1px solid #755335;border-radius:4px}
