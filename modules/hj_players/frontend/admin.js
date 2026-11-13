@@ -96,8 +96,14 @@
     const row=document.createElement('div');row.className=`player-row ${!p.visible?'is-hidden':''}`;row.dataset.player=p.id;
     if(p.is_dealer)row.classList.add('dealer-row');
     const seatOptions=[['','—'],...Array.from({length:10},(_,i)=>[i+1,String(i+1).padStart(2,'0')])];
-    row.innerHTML=`<div class="player-seat">${p.is_dealer?'D':p.seat?String(p.seat).padStart(2,'0'):'—'}</div><div class="player-main"><button class="player-name" title="Изменить имя">${HJ.esc(p.nickname)}</button><span>${p.is_dealer?'Дилер':'Игрок'} · ${(p.style||state.settings.default_style||'classic').toUpperCase()}</span></div><div class="player-controls">${!p.is_dealer?selectInput(seatOptions,p.seat??'','aria-label="Бокс" class="mini-seat"'):''}${selectInput(statuses,p.status,'aria-label="Статус игрока" class="mini-status"')}<button class="icon-button visibility" title="${p.visible?'Скрыть':'Показать'}">${p.visible?'◉':'◎'}</button>${!p.is_dealer?'<button class="icon-button more" title="Действия">···</button>':''}</div>`;
+    row.innerHTML=`<div class="player-seat">${p.is_dealer?'D':p.seat?String(p.seat).padStart(2,'0'):'—'}</div><div class="player-main"><button class="player-name" title="Изменить имя">${HJ.esc(p.nickname)}</button><span>${p.is_dealer?'Дилер':'Игрок'} · ${(p.style||state.settings.default_style||'classic').toUpperCase()}</span></div><div class="player-controls"><button class="icon-button avatar-upload" title="Загрузить фото лица">📷</button>${selectInput([['nickname','НИК'],['avatar','ФОТО'],['both','ФОТО+НИК']],p.display_mode||'nickname','aria-label="Вид плашки" class="avatar-mode"')}${!p.is_dealer?selectInput(seatOptions,p.seat??'','aria-label="Бокс" class="mini-seat"'):''}${selectInput(statuses,p.status,'aria-label="Статус игрока" class="mini-status"')}<button class="icon-button visibility" title="${p.visible?'Скрыть':'Показать'}">${p.visible?'◉':'◎'}</button>${!p.is_dealer?'<button class="icon-button more" title="Действия">···</button>':''}</div>`;
     row.querySelector('.player-name').addEventListener('click',()=>openModal('edit',p));
+    row.querySelector('.avatar-upload').addEventListener('click',()=>uploadPlayerAvatar(p));
+    row.querySelector('.avatar-mode').addEventListener('change',e=>act(async()=>{
+      await patch('/api/players/'+encodeURIComponent(p.id),{display_mode:e.target.value});
+      setToast('Режим плашки обновлён');
+    }));
+
     row.querySelector('.visibility').addEventListener('click',()=>act(()=>patch(`/api/players/${p.id}`,{visible:!p.visible})));
     row.querySelector('.mini-status').addEventListener('change',e=>act(()=>patch(`/api/players/${p.id}`,{status:e.target.value})));
     row.querySelector('.mini-seat')?.addEventListener('change',e=>act(()=>patch(`/api/players/${p.id}`,{seat:e.target.value?Number(e.target.value):null})));
@@ -114,6 +120,38 @@
       });row.appendChild(menu);
     });
     return row;
+  }
+  async function uploadPlayerAvatar(player){
+    const picker = document.createElement('input');
+    picker.type = 'file'; picker.accept = 'image/*';
+    picker.onchange = async () => {
+      const file = picker.files?.[0];
+      if (!file) return;
+      try {
+        if (file.size > 15*1024*1024) throw Error('Фото должно быть меньше 15 МБ');
+        const image = await createImageBitmap(file);
+        const canvas = document.createElement('canvas');
+        canvas.width = canvas.height = 512;
+        const context = canvas.getContext('2d');
+        const crop = Math.min(image.width, image.height);
+        context.drawImage(image,(image.width-crop)/2,(image.height-crop)/2,crop,crop,0,0,512,512);
+        image.close?.();
+        let blob = await new Promise(resolve=>canvas.toBlob(resolve,'image/jpeg',.80));
+        if(!blob || blob.size>400000) blob = await new Promise(resolve=>canvas.toBlob(resolve,'image/jpeg',.62));
+        if(!blob || blob.size>400000) throw Error('Не удалось сжать фото');
+        const response = await fetch('/api/players/'+encodeURIComponent(player.id)+'/avatar',{
+          method:'POST',headers:{'Content-Type':'image/jpeg'},body:blob
+        });
+        if (!response.ok) {
+          const data = await response.json().catch(()=>null);
+          throw Error(data?.detail || 'HTTP '+response.status);
+        }
+        state = await response.json();
+        render();
+        setToast('Фото сохранено. Режим «ФОТО» включён.');
+      } catch(err) {setToast('Не удалось загрузить фото: '+err.message,true);}
+    };
+    picker.click();
   }
   function renderStage(){
     const root=$('stageLabels');root.replaceChildren();
