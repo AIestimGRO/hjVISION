@@ -22,6 +22,7 @@ class PlayerIn(BaseModel):
     theme:str|None=None
 
 class PlayerPatch(BaseModel):
+    display_mode:str|None=None
     nickname:str|None=None
     seat:int|None=None
     visible:bool|None=None
@@ -68,6 +69,8 @@ class Plugin:
         app.mount('/themes',StaticFiles(directory=theme_dir),name='themes')
         app.mount('/custom-themes',StaticFiles(directory=custom_theme_dir),name='custom-themes')
         app.mount('/module-assets/hj.players',StaticFiles(directory=ui),name='players-frontend')
+        avatar_dir = ctx.user_data_dir / 'avatars'
+        avatar_dir.mkdir(parents=True,exist_ok=True)
         player_service=PlayersAPI(ctx)
         ctx.register_service('players.api',player_service)
         ctx.register_ui('Игроки и рассадка','/admin')
@@ -172,6 +175,49 @@ class Plugin:
                 state["drafts"][profile_id] = draft
             return await change(mutate)
 
+        # Avatar photos live in the USER DATA folder, not the replaceable ZIP.
+        # The admin uploads a browser-cropped JPEG (< 400 KB). No Pillow dependency.
+        @app.get('/api/players/{pid}/avatar')
+        def get_avatar(pid:str):
+            find_player(ctx.state(),pid)
+            if not re.fullmatch(r'[A-Za-z0-9_-]{1,64}',pid):
+                raise HTTPException(404,'Игрок не найден')
+            path=avatar_dir/(pid+'.jpg')
+            if not path.is_file():raise HTTPException(404,'Фото не загружено')
+            return FileResponse(path,media_type='image/jpeg',headers={'Cache-Control':'no-store'})
+
+        @app.post('/api/players/{pid}/avatar',dependencies=[Depends(admin_only)])
+        async def upload_avatar(pid:str,request:Request):
+            if not re.fullmatch(r'[A-Za-z0-9_-]{1,64}',pid):
+                raise HTTPException(400,'Неверный ID игрока')
+            find_player(ctx.state(),pid)
+            if request.headers.get('content-type','').split(';')[0].strip().lower()!='image/jpeg':
+                raise HTTPException(415,'Загрузите JPEG')
+            image=await request.body()
+            if len(image)<100 or len(image)>400_000 or not image.startswith(b'\\xff\\xd8\\xff') or not image.endswith(b'\\xff\\xd9'):
+                raise HTTPException(400,'JPEG должен быть корректным и не более 400 КБ')
+            target=avatar_dir/(pid+'.jpg')
+            temp=avatar_dir/(pid+'.'+uuid4().hex+'.tmp')
+            temp.write_bytes(image)
+            os.replace(temp,target)
+            def mutate(state):
+                player=find_player(state,pid)
+                player['avatar_revision']=uuid4().hex
+                player['display_mode']='avatar'
+            return await change(mutate)
+
+        @app.delete('/api/players/{pid}/avatar',dependencies=[Depends(admin_only)])
+        async def delete_avatar(pid:str):
+            if not re.fullmatch(r'[A-Za-z0-9_-]{1,64}',pid):
+                raise HTTPException(400,'Неверный ID игрока')
+            def mutate(state):
+                player=find_player(state,pid)
+                player.pop('avatar_revision',None)
+                player['display_mode']='nickname'
+            result=await change(mutate)
+            (avatar_dir/(pid+'.jpg')).unlink(missing_ok=True)
+            return result
+
         @app.post("/api/players", dependencies=[Depends(admin_only)])
         async def add_player(body: PlayerIn):
             def mutate(state):
@@ -200,6 +246,10 @@ class Plugin:
                     elif k == "status" and v not in ALLOWED_STATUSES: raise ValueError("Неверный статус")
                     elif k == "style" and v is not None and v not in ALLOWED_STYLES: raise ValueError("Неверный стиль")
                     elif k == "theme": v = require_theme(v)
+                    elif k == "display_mode":
+                        if v not in ('nickname','avatar','both'):raise ValueError('Неверный режим отображения')
+                        if v != 'nickname' and not p.get('avatar_revision'):
+                            raise ValueError('Сначала загрузите фотографию')
                     elif k == "visible" and not isinstance(v,bool): raise ValueError("Неверная видимость")
                     p[k] = v
                 if "seat" in payload:
