@@ -144,7 +144,7 @@ def test_failed_atomic_swap_restores_old_module(tmp_path,monkeypatch):
     import core.update_manager as mod
     real_replace=mod.os.replace
     def fail_replace(src,dst):
-        if str(src).endswith('/hj_players') and '/updates/hj-stage-' in str(src) and Path(dst)==mods/'hj_players':
+        if Path(src).name=='hj_players' and any(part.startswith('hj-stage-') for part in Path(src).parts) and Path(dst)==mods/'hj_players':
             raise OSError('Simulated disk failure')
         return real_replace(src,dst)
     monkeypatch.setattr(mod.os,'replace',fail_replace)
@@ -193,7 +193,7 @@ def test_startup_failing_updated_module_automatically_rolls_back(tmp_path):
     assert check_manifest(mods/'hj_players')['version']=='0.3.9'
     path=mods/'hj_players/backend/plugin.py'
     code=path.read_text(encoding='utf-8')
-    path.write_text(code.replace("return clean_nickname('Тест')=='Тест' and 'compact' in ALLOWED_STYLES",'return False'))
+    path.write_text(code.replace("return clean_nickname('Тест')=='Тест' and 'compact' in ALLOWED_STYLES",'return False'),encoding='utf-8')
     # Startup validates the updated module, sees the failed self-test,
     # restores last known module code, and constructs a fresh route table.
     with TestClient(create_app(db,modules_dir=mods)) as c:
